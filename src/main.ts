@@ -76,7 +76,7 @@ async function bootstrap(): Promise<NestFastifyApplication> {
   const logger: Logger = app.get(Logger);
 
   // serve index.html without a cache
-  app.getHttpAdapter().get('/', async (req: FastifyRequest, res: FastifyReply) => {
+  app.getHttpAdapter().get('./', async (req: FastifyRequest, res: FastifyReply) => {
     res.type('text/html');
     res.header('Cache-Control', 'no-cache, no-store, must-revalidate');
     res.header('Pragma', 'no-cache');
@@ -93,7 +93,7 @@ async function bootstrap(): Promise<NestFastifyApplication> {
   });
 
   // set prefix
-  app.setGlobalPrefix('/api');
+  app.setGlobalPrefix('./api');
 
   // setup cors
   app.enableCors({

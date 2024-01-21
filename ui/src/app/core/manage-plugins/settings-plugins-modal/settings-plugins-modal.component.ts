@@ -53,7 +53,7 @@ export class SettingsPluginsModalComponent implements OnInit {
   }
 
   loadPluginConfig() {
-    this.$api.get(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}`).subscribe(
+    this.$api.get(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}`).subscribe(
       (pluginConfig) => {
         for (const block of pluginConfig) {
           const pluginConfigBlock = {
@@ -85,7 +85,7 @@ export class SettingsPluginsModalComponent implements OnInit {
     const configBlocks = this.pluginConfig.map(x => x.config);
 
     try {
-      await this.$api.post(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, configBlocks)
+      await this.$api.post(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, configBlocks)
         .toPromise();
 
       // reload app settings if the config was changed for Homebridge UI
@@ -133,7 +133,7 @@ export class SettingsPluginsModalComponent implements OnInit {
 
   getChildBridges(): any[] {
     try {
-      this.$api.get('/status/homebridge/child-bridges').subscribe((data: any[]) => {
+      this.$api.get('./status/homebridge/child-bridges').subscribe((data: any[]) => {
         data.forEach((bridge) => {
           if (this.plugin.name === bridge.plugin) {
             this.childBridges.push(bridge);
@@ -148,14 +148,14 @@ export class SettingsPluginsModalComponent implements OnInit {
   }
 
   public onRestartHomebridgeClick() {
-    this.$router.navigate(['/restart']);
+    this.$router.navigate(['./restart']);
     this.activeModal.close();
   }
 
   public async onRestartChildBridgeClick() {
     try {
       for (const bridge of this.childBridges) {
-        await this.$api.put(`/server/restart/${bridge.username}`, {}).toPromise();
+        await this.$api.put(`./server/restart/${bridge.username}`, {}).toPromise();
       }
       this.$toastr.success(
         this.translate.instant('plugins.manage.child_bridge_restart_success'),
@@ -194,7 +194,7 @@ export class SettingsPluginsModalComponent implements OnInit {
 
   openFundingModalForUi() {
     try {
-      this.$api.get('/plugins').subscribe((plugins) => {
+      this.$api.get('./plugins').subscribe((plugins) => {
         const ref = this.$modal.open(DonateModalComponent);
         ref.componentInstance.plugin = plugins.find((x) => x.name === 'homebridge-config-ui-x');
       });
@@ -205,7 +205,7 @@ export class SettingsPluginsModalComponent implements OnInit {
 
   openPluginLogModalForUi() {
     try {
-      this.$api.get('/plugins').subscribe((plugins) => {
+      this.$api.get('./plugins').subscribe((plugins) => {
         const ref = this.$modal.open(PluginLogModalComponent, {
           size: 'xl',
           backdrop: 'static',

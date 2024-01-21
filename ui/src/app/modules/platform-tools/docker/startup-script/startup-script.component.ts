@@ -102,7 +102,7 @@ export class StartupScriptComponent implements OnInit, OnDestroy {
     }
 
     try {
-      await this.$api.put('/platform-tools/docker/startup-script', { script: this.startupScript }).toPromise();
+      await this.$api.put('./platform-tools/docker/startup-script', { script: this.startupScript }).toPromise();
       this.$toastr.success(
         this.translate.instant('platform.docker.startup_script.toast_restart_required'),
         this.translate.instant('platform.docker.startup_script.toast_title_script_saved'),

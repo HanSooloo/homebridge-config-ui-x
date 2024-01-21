@@ -16,7 +16,7 @@ export class RestartHomebridgeComponent implements OnInit {
   ngOnInit() {}
 
   public onRestartHomebridgeClick() {
-    this.$router.navigate(['/restart']);
+    this.$router.navigate(['./restart']);
     this.activeModal.close();
   }
 }

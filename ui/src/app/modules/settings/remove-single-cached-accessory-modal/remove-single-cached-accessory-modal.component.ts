@@ -26,7 +26,7 @@ export class RemoveSingleCachedAccessoryModalComponent implements OnInit {
 
   async loadCachedAccessories() {
     try {
-      this.cachedAccessories = await this.$api.get('/server/cached-accessories').toPromise();
+      this.cachedAccessories = await this.$api.get('./server/cached-accessories').toPromise();
     } catch (e) {
       this.toastr.error(
         this.translate.instant('reset.toast_error_message'),
@@ -41,7 +41,7 @@ export class RemoveSingleCachedAccessoryModalComponent implements OnInit {
 
     this.toastr.info(this.translate.instant('reset.toast_removing_cached_accessory_please_wait'));
 
-    this.$api.delete(`/server/cached-accessories/${item.UUID}`, {
+    this.$api.delete(`./server/cached-accessories/${item.UUID}`, {
       params: {
         cacheFile: item.$cacheFile,
       },

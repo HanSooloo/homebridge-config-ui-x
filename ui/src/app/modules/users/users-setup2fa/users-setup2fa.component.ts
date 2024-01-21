@@ -37,7 +37,7 @@ export class UsersSetup2faComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.$api.post('/users/otp/setup', {}).subscribe(
+    this.$api.post('./users/otp/setup', {}).subscribe(
       data => {
         this.checkTimeDiff(data.timestamp);
         if (!this.timeDiffError) {
@@ -64,7 +64,7 @@ export class UsersSetup2faComponent implements OnInit {
   }
 
   enable2fa() {
-    this.$api.post('/users/otp/activate', this.formGroup.value).subscribe(
+    this.$api.post('./users/otp/activate', this.formGroup.value).subscribe(
       () => {
         this.toastr.success(this.translate.instant('users.setup_2fa_enabled_success'), this.translate.instant('toast.title_success'));
         this.activeModal.close();

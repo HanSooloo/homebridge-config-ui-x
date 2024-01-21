@@ -18,7 +18,7 @@ export class HomebridgeDeconzComponent {
   ) {}
 
   downloadDumpFile() {
-    this.$api.get('/plugins/custom-plugins/homebridge-deconz/dump-file', { observe: 'response', responseType: 'blob' })
+    this.$api.get('./plugins/custom-plugins/homebridge-deconz/dump-file', { observe: 'response', responseType: 'blob' })
       .subscribe(
         (res) => {
           saveAs(res.body, 'homebridge-deconz.json.gz');

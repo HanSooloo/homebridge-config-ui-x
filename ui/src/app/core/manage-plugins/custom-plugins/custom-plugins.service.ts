@@ -50,6 +50,6 @@ export class CustomPluginsService {
   }
 
   private async loadPluginConfig(pluginName: string) {
-    return this.$api.get(`/config-editor/plugin/${encodeURIComponent(pluginName)}`).toPromise();
+    return this.$api.get(`./config-editor/plugin/${encodeURIComponent(pluginName)}`).toPromise();
   }
 }

@@ -69,7 +69,7 @@ export class SettingsComponent implements OnInit {
   }
 
   initServiceModeForm() {
-    this.$api.get('/platform-tools/hb-service/homebridge-startup-settings').subscribe(
+    this.$api.get('./platform-tools/hb-service/homebridge-startup-settings').subscribe(
       (data) => {
         this.serviceForm.patchValue(data);
         this.serviceForm.valueChanges.pipe(debounceTime(500)).subscribe(this.saveServiceModeSettings.bind(this));
@@ -81,7 +81,7 @@ export class SettingsComponent implements OnInit {
   }
 
   saveServiceModeSettings(data = this.serviceForm.value) {
-    this.$api.put('/platform-tools/hb-service/homebridge-startup-settings', data).subscribe(() => {
+    this.$api.put('./platform-tools/hb-service/homebridge-startup-settings', data).subscribe(() => {
       this.saved = true;
       this.$notification.configUpdated.next(undefined);
     });
@@ -129,9 +129,9 @@ export class SettingsComponent implements OnInit {
 
   async getNetworkSettings() {
     return Promise.all([
-      this.$api.get('/server/network-interfaces/system').toPromise(),
-      this.$api.get('/server/network-interfaces/bridge').toPromise(),
-      this.$api.get('/server/mdns-advertiser').toPromise(),
+      this.$api.get('./server/network-interfaces/system').toPromise(),
+      this.$api.get('./server/network-interfaces/bridge').toPromise(),
+      this.$api.get('./server/mdns-advertiser').toPromise(),
     ]).then(([system, adapters, mdnsAdvertiser]) => {
       this.availableNetworkAdapters = system;
       this.buildBridgeNetworkAdapterList(adapters);
@@ -143,7 +143,7 @@ export class SettingsComponent implements OnInit {
   }
 
   async setHomebridgeMdnsSetting(advertiser: string) {
-    this.$api.put('/server/mdns-advertiser', { advertiser })
+    this.$api.put('./server/mdns-advertiser', { advertiser })
       .subscribe(
         () => {
           this.saved = true;
@@ -156,7 +156,7 @@ export class SettingsComponent implements OnInit {
   }
 
   async setNetworkInterfaces(adapters: string[]) {
-    this.$api.put('/server/network-interfaces/bridge', { adapters })
+    this.$api.put('./server/network-interfaces/bridge', { adapters })
       .subscribe(
         () => {
           this.saved = true;

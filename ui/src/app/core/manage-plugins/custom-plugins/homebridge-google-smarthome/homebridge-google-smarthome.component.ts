@@ -127,7 +127,7 @@ export class HomebridgeGoogleSmarthomeComponent implements OnInit, OnDestroy {
 
   async saveConfig() {
     try {
-      await this.$api.post(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, this.pluginConfig).toPromise();
+      await this.$api.post(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, this.pluginConfig).toPromise();
       this.justLinked = true;
       this.$toastr.success(
         this.translate.instant('plugins.settings.toast_restart_required'),

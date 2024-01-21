@@ -49,7 +49,7 @@ export class ConfigEditorController {
     summary: 'Return the config blocks for a specific plugin.',
     description: 'An array of config blocks will be returned. An empty array will be returned if the plugin is not configured.',
   })
-  @Get('/plugin/:pluginName')
+  @Get('./plugin/:pluginName')
   getConfigForPlugin(@Param('pluginName') pluginName: string) {
     return this.configEditorService.getConfigForPlugin(pluginName);
   }
@@ -59,7 +59,7 @@ export class ConfigEditorController {
     summary: 'Replace the config for a specific plugin.',
     description: 'An array of all config blocks for the plugin must be provided, missing blocks will be removed. Sending an empty array will remove all plugin config.',
   })
-  @Post('/plugin/:pluginName')
+  @Post('./plugin/:pluginName')
   @ApiBody({ description: 'Array of plugin config blocks', type: 'json', isArray: true })
   updateConfigForPlugin(@Param('pluginName') pluginName: string, @Body() body) {
     return this.configEditorService.updateConfigForPlugin(pluginName, body);
@@ -87,7 +87,7 @@ export class ConfigEditorController {
 
   @UseGuards(AdminGuard)
   @ApiOperation({ summary: 'List the available Homebridge config.json backups.' })
-  @Get('/backups')
+  @Get('./backups')
   listConfigBackups() {
     return this.configEditorService.listConfigBackups();
   }
@@ -95,14 +95,14 @@ export class ConfigEditorController {
   @UseGuards(AdminGuard)
   @ApiOperation({ summary: 'Return the Homebridge config.json file for the given backup ID.' })
   @ApiParam({ name: 'backupId', type: 'number' })
-  @Get('/backups/:backupId(\\d+)')
+  @Get('./backups/:backupId(\\d+)')
   getBackup(@Param('backupId', ParseIntPipe) backupId) {
     return this.configEditorService.getConfigBackup(backupId);
   }
 
   @UseGuards(AdminGuard)
   @ApiOperation({ summary: 'Delete all the Homebridge config.json backups.' })
-  @Delete('/backups')
+  @Delete('./backups')
   deleteAllConfigBackups() {
     return this.configEditorService.deleteAllConfigBackups();
   }

@@ -29,7 +29,7 @@ export class SelectPreviousVersionComponent implements OnInit {
   }
 
   lookupVersions() {
-    this.$api.get(`/plugins/lookup/${encodeURIComponent(this.plugin.name)}/versions`).subscribe(
+    this.$api.get(`./plugins/lookup/${encodeURIComponent(this.plugin.name)}/versions`).subscribe(
       (result) => {
         const tagVersions = {};
         for (const key of Object.keys(result.tags)) {

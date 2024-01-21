@@ -21,7 +21,7 @@ export class HomebridgeDeconzController {
   ) {}
 
   @UseGuards(AdminGuard)
-  @Get('/dump-file')
+  @Get('./dump-file')
   @Header('Content-disposition', 'attachment; filename=homebridge-deconz.json.gz')
   @Header('Content-Type', 'application/json+gzip')
   async exchangeCredentials(): Promise<StreamableFile> {

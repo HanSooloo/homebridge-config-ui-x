@@ -28,7 +28,7 @@ export class ScheduledBackupsComponent implements OnInit {
   }
 
   getScheduledBackups() {
-    this.$api.get('/backup/scheduled-backups').subscribe(
+    this.$api.get('./backup/scheduled-backups').subscribe(
       (data) => {
         this.scheduledBackups = data;
       },
@@ -39,7 +39,7 @@ export class ScheduledBackupsComponent implements OnInit {
   }
 
   getNextBackup() {
-    this.$api.get('/backup/scheduled-backups/next').subscribe(
+    this.$api.get('./backup/scheduled-backups/next').subscribe(
       (data) => {
         this.backupTime = data.next;
       },
@@ -50,7 +50,7 @@ export class ScheduledBackupsComponent implements OnInit {
   }
 
   download(backup) {
-    this.$api.get(`/backup/scheduled-backups/${backup.id}`, { observe: 'response', responseType: 'blob' }).subscribe(
+    this.$api.get(`./backup/scheduled-backups/${backup.id}`, { observe: 'response', responseType: 'blob' }).subscribe(
       (res) => {
         const archiveName = backup.fileName || 'homebridge-backup.tar.gz';
         saveAs(res.body, archiveName);

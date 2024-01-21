@@ -67,7 +67,7 @@ export class PluginsComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     try {
-      const installedPlugins = await this.$api.get('/plugins').toPromise();
+      const installedPlugins = await this.$api.get('./plugins').toPromise();
       this.installedPlugins = installedPlugins.filter((x) => x.name !== 'homebridge-config-ui-x');
       await this.appendMetaInfo();
 
@@ -121,7 +121,7 @@ export class PluginsComponent implements OnInit, OnDestroy {
       .map(async (plugin) => {
         try {
           // Adds some extra properties to the plugin object for the plugin card
-          const configBlocks = await this.$api.get(`/config-editor/plugin/${encodeURIComponent(plugin.name)}`).toPromise();
+          const configBlocks = await this.$api.get(`./config-editor/plugin/${encodeURIComponent(plugin.name)}`).toPromise();
           plugin.isConfigured = configBlocks.length > 0;
 
           plugin.recommendChildBridge = plugin.isConfigured
@@ -148,7 +148,7 @@ export class PluginsComponent implements OnInit, OnDestroy {
     this.installedPlugins = [];
     this.loading = true;
 
-    this.$api.get(`/plugins/search/${encodeURIComponent(this.form.value.query)}`).subscribe(
+    this.$api.get(`./plugins/search/${encodeURIComponent(this.form.value.query)}`).subscribe(
       (data) => {
         this.installedPlugins = data.filter((x) => x.name !== 'homebridge-config-ui-x');
         this.appendMetaInfo();

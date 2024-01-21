@@ -48,7 +48,7 @@ export class PluginLogModalComponent implements OnInit, OnDestroy {
 
   getPluginLog() {
     // Get the plugin name as configured in the config file
-    this.$api.get(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}`).subscribe(
+    this.$api.get(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}`).subscribe(
       (result) => {
         this.pluginAlias = this.plugin.name === 'homebridge-config-ui-x' ? 'Homebridge UI' : (result[0]?.name || this.plugin.name);
         this.$log.startTerminal(this.termTarget, {}, this.resizeEvent, this.pluginAlias);
@@ -68,7 +68,7 @@ export class PluginLogModalComponent implements OnInit, OnDestroy {
     ref.componentInstance.faIconClass = 'fas fa-fw fa-user-secret primary-text';
 
     ref.result.then(() => {
-      this.$api.get('/platform-tools/hb-service/log/download?colour=yes', { observe: 'response', responseType: 'text' })
+      this.$api.get('./platform-tools/hb-service/log/download?colour=yes', { observe: 'response', responseType: 'text' })
         .subscribe(
           (res: HttpResponse<any>) => {
             if (!res.body) {

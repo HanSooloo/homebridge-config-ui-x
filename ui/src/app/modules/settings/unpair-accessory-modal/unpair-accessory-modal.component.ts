@@ -26,7 +26,7 @@ export class UnpairAccessoryModalComponent implements OnInit {
 
   async loadPairings() {
     try {
-      this.pairings = (await this.$api.get('/server/pairings').toPromise())
+      this.pairings = (await this.$api.get('./server/pairings').toPromise())
         // eslint-disable-next-line no-underscore-dangle
         .sort((a, b) => b._main ? 1 : -1);
     } catch (e) {
@@ -38,7 +38,7 @@ export class UnpairAccessoryModalComponent implements OnInit {
   removeAccessory(id: string) {
     this.deleting = id;
 
-    this.$api.delete(`/server/pairings/${id}`).subscribe(
+    this.$api.delete(`./server/pairings/${id}`).subscribe(
       async () => {
         await this.loadPairings();
 

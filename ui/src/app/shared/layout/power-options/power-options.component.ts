@@ -22,14 +22,14 @@ export class PowerOptionsComponent implements OnInit {
   ngOnInit() {}
 
   restartHomebridge() {
-    this.$router.navigate(['/restart']);
+    this.$router.navigate(['./restart']);
     this.activeModal.close();
   }
 
   restartHomebridgeService() {
-    this.$api.put('/platform-tools/hb-service/set-full-service-restart-flag', {}).subscribe(
+    this.$api.put('./platform-tools/hb-service/set-full-service-restart-flag', {}).subscribe(
       () => {
-        this.$router.navigate(['/restart']);
+        this.$router.navigate(['./restart']);
         this.activeModal.close();
       },
       (err) => {
@@ -39,22 +39,22 @@ export class PowerOptionsComponent implements OnInit {
   }
 
   restartServer() {
-    this.$router.navigate(['/platform-tools/linux/restart-server']);
+    this.$router.navigate(['./platform-tools/linux/restart-server']);
     this.activeModal.close();
   }
 
   shutdownServer() {
-    this.$router.navigate(['/platform-tools/linux/shutdown-server']);
+    this.$router.navigate(['./platform-tools/linux/shutdown-server']);
     this.activeModal.close();
   }
 
   dockerStartupScript() {
-    this.$router.navigate(['/platform-tools/docker/startup-script']);
+    this.$router.navigate(['./platform-tools/docker/startup-script']);
     this.activeModal.close();
   }
 
   dockerRestartContainer() {
-    this.$router.navigate(['/platform-tools/docker/restart-container']);
+    this.$router.navigate(['./platform-tools/docker/restart-container']);
     this.activeModal.close();
   }
 }

@@ -70,7 +70,7 @@ export class ManualPluginConfigModalComponent implements OnInit {
   }
 
   loadPluginAlias() {
-    this.$api.get(`/plugins/alias/${encodeURIComponent(this.plugin.name)}`).subscribe(
+    this.$api.get(`./plugins/alias/${encodeURIComponent(this.plugin.name)}`).subscribe(
       (result) => {
         if (result.pluginAlias && result.pluginType) {
           this.pluginAlias = result.pluginAlias;
@@ -87,7 +87,7 @@ export class ManualPluginConfigModalComponent implements OnInit {
   }
 
   loadHomebridgeConfig() {
-    this.$api.get(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}`).subscribe(
+    this.$api.get(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}`).subscribe(
       (config) => {
         this.pluginConfig = config;
 
@@ -214,7 +214,7 @@ export class ManualPluginConfigModalComponent implements OnInit {
     }
 
     try {
-      await this.$api.post(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, this.pluginConfig)
+      await this.$api.post(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, this.pluginConfig)
         .toPromise();
       this.activeModal.close();
       this.$modal.open(RestartHomebridgeComponent);
@@ -225,7 +225,7 @@ export class ManualPluginConfigModalComponent implements OnInit {
   }
 
   openFullConfigEditor() {
-    this.$router.navigate(['/config']);
+    this.$router.navigate(['./config']);
     this.activeModal.close();
   }
 }

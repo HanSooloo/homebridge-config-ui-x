@@ -13,10 +13,10 @@ export class UsersResolver implements Resolve<any> {
 
   async resolve() {
     try {
-      return await this.$api.get('/users').toPromise();
+      return await this.$api.get('./users').toPromise();
     } catch (err) {
       this.$toastr.error(err.message, 'Failed to Load Users');
-      this.$router.navigate(['/']);
+      this.$router.navigate(['./']);
     }
   }
 }

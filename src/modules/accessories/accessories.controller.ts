@@ -30,7 +30,7 @@ export class AccessoriesController {
     summary: 'Return a list of Homebridge accessories.',
     description: 'Homebridge must be running in "insecure" mode to access the accessory list.',
   })
-  @Get('/')
+  @Get('./')
   getAccessories() {
     return this.accessoriesService.loadAccessories();
   }
@@ -38,7 +38,7 @@ export class AccessoriesController {
   @ApiOperation({
     summary: 'Get the accessory and room layout for the authenticating user.',
   })
-  @Get('/layout')
+  @Get('./layout')
   getAccessoryLayout(@Req() req) {
     return this.accessoriesService.getAccessoryLayout(req.user.username);
   }
@@ -47,7 +47,7 @@ export class AccessoriesController {
     summary: 'Get a single accessory and refresh it\'s characteristics.',
     description: 'Get the "uniqueId" from the GET /api/accessories method.',
   })
-  @Get('/:uniqueId')
+  @Get('./:uniqueId')
   getAccessory(@Param('uniqueId') uniqueId: string) {
     return this.accessoriesService.getAccessory(uniqueId);
   }
@@ -57,7 +57,7 @@ export class AccessoriesController {
     description: 'Get the "uniqueId" and "characteristicType" values from the GET /api/accessories method.',
   })
   @ApiParam({ name: 'uniqueId' })
-  @Put('/:uniqueId')
+  @Put('./:uniqueId')
   setAccessoryCharacteristic(@Param('uniqueId') uniqueId, @Body() body: AccessorySetCharacteristicDto) {
     return this.accessoriesService.setAccessoryCharacteristic(uniqueId, body.characteristicType, body.value);
   }

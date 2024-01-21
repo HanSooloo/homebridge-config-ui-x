@@ -18,7 +18,7 @@ export class HomebridgeHueComponent {
   ) {}
 
   downloadDumpFile() {
-    this.$api.get('/plugins/custom-plugins/homebridge-hue/dump-file', { observe: 'response', responseType: 'blob' })
+    this.$api.get('./plugins/custom-plugins/homebridge-hue/dump-file', { observe: 'response', responseType: 'blob' })
       .subscribe(
         (res) => {
           saveAs(res.body, 'homebridge-hue.json.gz');

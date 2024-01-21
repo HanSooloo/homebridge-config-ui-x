@@ -64,7 +64,7 @@ export class LogsComponent implements OnInit, OnDestroy {
     ref.componentInstance.faIconClass = 'fas fa-fw fa-user-secret primary-text';
 
     ref.result.then(() => {
-      this.$api.get('/platform-tools/hb-service/log/download', { observe: 'response', responseType: 'blob' })
+      this.$api.get('./platform-tools/hb-service/log/download', { observe: 'response', responseType: 'blob' })
         .subscribe(
           (res: HttpResponse<any>) => {
             saveAs(res.body, 'homebridge.log.txt');
@@ -92,7 +92,7 @@ export class LogsComponent implements OnInit, OnDestroy {
     ref.componentInstance.faIconClass = 'fas fa-fw fa-circle-exclamation primary-text';
 
     ref.result.then(() => {
-      this.$api.put('/platform-tools/hb-service/log/truncate', {})
+      this.$api.put('./platform-tools/hb-service/log/truncate', {})
         .subscribe(
           () => {
             this.$toastr.success(

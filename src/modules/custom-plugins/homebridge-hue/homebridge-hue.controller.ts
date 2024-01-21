@@ -21,7 +21,7 @@ export class HomebridgeHueController {
   ) {}
 
   @UseGuards(AdminGuard)
-  @Get('/dump-file')
+  @Get('./dump-file')
   @Header('Content-disposition', 'attachment; filename=homebridge-hue.json.gz')
   @Header('Content-Type', 'application/json+gzip')
   async exchangeCredentials(): Promise<StreamableFile> {

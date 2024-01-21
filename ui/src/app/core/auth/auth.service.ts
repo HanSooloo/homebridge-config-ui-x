@@ -28,7 +28,7 @@ export class AuthService {
   }
 
   login(form: { username: string; password: string; ota?: string }) {
-    return this.$api.post('/auth/login', form)
+    return this.$api.post('./auth/login', form)
       .toPromise()
       .then((resp) => {
         if (!this.validateToken(resp.access_token)) {
@@ -40,7 +40,7 @@ export class AuthService {
   }
 
   noauth() {
-    return this.$api.post('/auth/noauth', {})
+    return this.$api.post('./auth/noauth', {})
       .toPromise()
       .then((resp) => {
         if (!this.validateToken(resp.access_token)) {
@@ -85,7 +85,7 @@ export class AuthService {
   }
 
   checkToken() {
-    return this.$api.get('/auth/check').toPromise()
+    return this.$api.get('./auth/check').toPromise()
       .catch((err: any) => {
         if (err.status === 401) {
           // token is no longer valid, do logout

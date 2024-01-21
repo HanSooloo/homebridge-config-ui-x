@@ -31,14 +31,14 @@ export class AuthController {
     return this.authService.signIn(body.username, body.password, body.otp);
   }
 
-  @Get('/settings')
+  @Get('./settings')
   @ApiOperation({ summary: 'Return settings required to load the UI before authentication.' })
   getSettings() {
     return this.configService.uiSettings();
   }
 
   @ApiExcludeEndpoint()
-  @Get('/wallpaper/:hash')
+  @Get('./wallpaper/:hash')
   @Header('Content-Type', 'image/jpeg')
   @Header('Cache-Control', 'public,max-age=31536000,immutable')
   getCustomWallpaper() {
@@ -46,7 +46,7 @@ export class AuthController {
   }
 
   @ApiOperation({ summary: 'This method can be used to obtain an access token ONLY when authentication has been disabled.' })
-  @Post('/noauth')
+  @Post('./noauth')
   getToken() {
     return this.authService.generateNoAuthToken();
   }
@@ -54,7 +54,7 @@ export class AuthController {
   @ApiBearerAuth()
   @ApiOperation({ summary: 'Check to see if an authentication token is still valid.' })
   @UseGuards(AuthGuard())
-  @Get('/check')
+  @Get('./check')
   checkAuth() {
     return { status: 'OK' };
   }

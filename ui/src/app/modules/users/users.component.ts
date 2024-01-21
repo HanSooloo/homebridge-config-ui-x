@@ -34,7 +34,7 @@ export class UsersComponent implements OnInit {
   }
 
   reloadUsers() {
-    return this.$api.get('/users').subscribe(
+    return this.$api.get('./users').subscribe(
       (result) => {
         this.homebridgeUsers = result;
       },
@@ -63,7 +63,7 @@ export class UsersComponent implements OnInit {
   }
 
   deleteUser(id: string) {
-    this.$api.delete(`/users/${id}`).subscribe(
+    this.$api.delete(`./users/${id}`).subscribe(
       () => {
         this.toastr.success(this.translate.instant('users.toast_user_deleted'), this.translate.instant('toast.title_success'));
         this.reloadUsers();

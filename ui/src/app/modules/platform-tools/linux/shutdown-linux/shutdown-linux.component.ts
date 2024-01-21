@@ -36,7 +36,7 @@ export class ShutdownLinuxComponent implements OnInit, OnDestroy {
       this.$settings.getAppSettings().catch(/* do nothing */);
     });
 
-    this.$api.put('/platform-tools/linux/shutdown-host', {}).subscribe(
+    this.$api.put('./platform-tools/linux/shutdown-host', {}).subscribe(
       data => {
         this.resp = data;
         this.checkIfServerUp();
@@ -57,7 +57,7 @@ export class ShutdownLinuxComponent implements OnInit, OnDestroy {
             this.translate.instant('platform.linux.restart.toast_server_restarted'),
             this.translate.instant('toast.title_success'),
           );
-          this.$router.navigate(['/']);
+          this.$router.navigate(['./']);
         }
       });
     }, 30000);

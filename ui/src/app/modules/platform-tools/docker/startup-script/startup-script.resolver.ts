@@ -13,10 +13,10 @@ export class StartupScriptResolver implements Resolve<any> {
 
   async resolve() {
     try {
-      return await this.$api.get('/platform-tools/docker/startup-script').toPromise();
+      return await this.$api.get('./platform-tools/docker/startup-script').toPromise();
     } catch (err) {
       this.$toastr.error(err.message, 'Failed to Load Startup Script');
-      this.$router.navigate(['/']);
+      this.$router.navigate(['./']);
     }
   }
 }

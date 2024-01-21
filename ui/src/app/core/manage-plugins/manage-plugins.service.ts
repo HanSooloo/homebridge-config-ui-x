@@ -192,7 +192,7 @@ export class ManagePluginsService {
   }
 
   private async loadConfigSchema(pluginName: string) {
-    return this.$api.get(`/plugins/config-schema/${encodeURIComponent(pluginName)}`).toPromise();
+    return this.$api.get(`./plugins/config-schema/${encodeURIComponent(pluginName)}`).toPromise();
   }
 
   private async checkNodeVersion(plugin: any): Promise<boolean> {

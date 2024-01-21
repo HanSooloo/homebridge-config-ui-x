@@ -206,7 +206,7 @@ export class ConfigEditorComponent implements OnInit, OnDestroy {
 
   async saveConfig(config: any) {
     try {
-      const data = await this.$api.post('/config-editor', config)
+      const data = await this.$api.post('./config-editor', config)
         .toPromise();
       this.homebridgeConfig = JSON.stringify(data, null, 4);
       this.$modal.open(RestartHomebridgeComponent);
@@ -225,7 +225,7 @@ export class ConfigEditorComponent implements OnInit, OnDestroy {
           this.originalConfig = this.homebridgeConfig;
         }
 
-        this.$api.get(`/config-editor/backups/${backupId}`).subscribe(
+        this.$api.get(`./config-editor/backups/${backupId}`).subscribe(
           json => {
             this.$toastr.warning(
               this.translate.instant('config.toast_click_save_to_confirm_backup_restore'),

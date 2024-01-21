@@ -18,7 +18,7 @@ export class SetupWizardController {
     private authService: AuthService,
   ) {}
 
-  @Post('/create-first-user')
+  @Post('./create-first-user')
   @ApiOperation({
     summary: 'Create the first user.',
     description: 'This endpoint is not available after the Homebridge setup wizard is complete.',
@@ -31,7 +31,7 @@ export class SetupWizardController {
     }
   }
 
-  @Get('/get-setup-wizard-token')
+  @Get('./get-setup-wizard-token')
   @ApiOperation({
     summary: 'Creates a auth token to be used by the setup wizard.',
     description: 'This endpoint is not available after the Homebridge setup wizard is complete.',

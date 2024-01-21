@@ -44,7 +44,7 @@ export class BridgePluginsModalComponent implements OnInit {
   }
 
   loadPluginConfig() {
-    this.$api.get(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}`).subscribe(
+    this.$api.get(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}`).subscribe(
       (configBlocks) => {
         this.configBlocks = configBlocks;
         for (const [i, block] of this.configBlocks.entries()) {
@@ -79,7 +79,7 @@ export class BridgePluginsModalComponent implements OnInit {
   async getUnusedPort() {
     this.saveInProgress = true;
     try {
-      const lookup = await this.$api.get('/server/port/new').toPromise();
+      const lookup = await this.$api.get('./server/port/new').toPromise();
       return lookup.port;
     } catch (e) {
       return Math.floor(Math.random() * (60000 - 30000 + 1) + 30000);
@@ -90,7 +90,7 @@ export class BridgePluginsModalComponent implements OnInit {
 
   async getDeviceInfo(username: string) {
     try {
-      this.deviceInfo[username] = await this.$api.get(`/server/pairings/${username.replace(/:/g, '')}`).toPromise();
+      this.deviceInfo[username] = await this.$api.get(`./server/pairings/${username.replace(/:/g, '')}`).toPromise();
     } catch (e) {
       this.deviceInfo[username] = false;
     }
@@ -100,7 +100,7 @@ export class BridgePluginsModalComponent implements OnInit {
     this.saveInProgress = true;
 
     try {
-      await this.$api.post(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, this.configBlocks).toPromise();
+      await this.$api.post(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, this.configBlocks).toPromise();
       this.activeModal.close();
       this.$modal.open(RestartHomebridgeComponent);
     } catch (err) {
@@ -128,7 +128,7 @@ export class BridgePluginsModalComponent implements OnInit {
   async restartChildBridge(username: string) {
     this.restartInProgress[username] = true;
     try {
-      await this.$api.put(`/server/restart/${username.replace(/:/g, '')}`, {}).toPromise();
+      await this.$api.put(`./server/restart/${username.replace(/:/g, '')}`, {}).toPromise();
       this.$toastr.success(
         this.$translate.instant('child_bridge.toast_restart_requested'),
         this.$translate.instant('toast.title_success'),
@@ -163,7 +163,7 @@ export class BridgePluginsModalComponent implements OnInit {
   }
 
   openFullConfigEditor() {
-    this.$router.navigate(['/config']);
+    this.$router.navigate(['./config']);
     this.activeModal.close();
   }
 }

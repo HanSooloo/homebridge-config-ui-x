@@ -37,7 +37,7 @@ export class BackupController {
 
   @UseGuards(AdminGuard)
   @ApiOperation({ summary: 'Download a .tar.gz of the Homebridge instance.' })
-  @Get('/download')
+  @Get('./download')
   async downloadBackup(@Res({ passthrough: true }) res): Promise<StreamableFile> {
     try {
       return await this.backupService.downloadBackup(res);
@@ -50,14 +50,14 @@ export class BackupController {
 
   @UseGuards(AdminGuard)
   @ApiOperation({ summary: 'Return the date and time of the next scheduled backup.' })
-  @Get('/scheduled-backups/next')
+  @Get('./scheduled-backups/next')
   async getNextBackupTime() {
     return this.backupService.getNextBackupTime();
   }
 
   @UseGuards(AdminGuard)
   @ApiOperation({ summary: 'List available system generated instance backups.' })
-  @Get('/scheduled-backups')
+  @Get('./scheduled-backups')
   async listScheduledBackups() {
     return this.backupService.listScheduledBackups();
   }
@@ -65,13 +65,13 @@ export class BackupController {
   @UseGuards(AdminGuard)
   @ApiOperation({ summary: 'Download a system generated instance backup.' })
   @ApiParam({ name: 'backupId', type: 'string' })
-  @Get('/scheduled-backups/:backupId')
+  @Get('./scheduled-backups/:backupId')
   async getScheduledBackup(@Param('backupId') backupId): Promise<StreamableFile> {
     return this.backupService.getScheduledBackup(backupId);
   }
 
   @UseGuards(AdminGuard)
-  @Post('/restore')
+  @Post('./restore')
   @ApiOperation({
     summary: 'Upload a .tar.gz of the Homebridge instance.',
     description: 'NOTE: This endpoint does not trigger the restore process.',
@@ -99,7 +99,7 @@ export class BackupController {
   }
 
   @UseGuards(AdminGuard)
-  @Put('/restore/trigger')
+  @Put('./restore/trigger')
   @ApiOperation({
     summary: 'Triggers a headless restore process from the last uploaded backup file.',
     description: 'Logs to stdout / stderr.',
@@ -129,7 +129,7 @@ export class BackupController {
       },
     },
   })
-  @Post('/restore/hbfx')
+  @Post('./restore/hbfx')
   async restoreHbfx(@Req() req: FastifyRequest) {
     try {
       const data = await req.file();
@@ -141,7 +141,7 @@ export class BackupController {
   }
 
   @UseGuards(AdminGuard)
-  @Put('/restart')
+  @Put('./restart')
   @ApiOperation({ summary: 'Trigger a hard restart of Homebridge (use after restoring backup).' })
   postBackupRestoreRestart() {
     return this.backupService.postBackupRestoreRestart();

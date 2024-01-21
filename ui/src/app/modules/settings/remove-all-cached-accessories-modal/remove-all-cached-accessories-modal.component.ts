@@ -21,7 +21,7 @@ export class RemoveAllCachedAccessoriesModalComponent {
 
   onResetCachedAccessoriesClick() {
     this.clicked = true;
-    return this.$api.put('/server/reset-cached-accessories', {}).subscribe(
+    return this.$api.put('./server/reset-cached-accessories', {}).subscribe(
       () => {
         this.toastr.success(
           this.translate.instant('reset.toast_clear_cached_accessories_success'),

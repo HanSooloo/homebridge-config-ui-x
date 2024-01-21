@@ -114,7 +114,7 @@ export class CustomPluginsComponent implements OnInit, OnDestroy {
 
     this.formActionSubject.subscribe(this.formActionEvent.bind(this));
 
-    this.basePath = `/plugins/settings-ui/${encodeURIComponent(this.plugin.name)}`;
+    this.basePath = `./plugins/settings-ui/${encodeURIComponent(this.plugin.name)}`;
 
     window.addEventListener('message', this.handleMessage, false);
   }
@@ -122,7 +122,7 @@ export class CustomPluginsComponent implements OnInit, OnDestroy {
   loadUi() {
     this.iframe = this.customPluginUiElementTarget.nativeElement as HTMLIFrameElement;
     this.iframe.src = environment.api.base + this.basePath +
-      '/index.html?origin=' + encodeURIComponent(location.origin) + '&v=' + encodeURIComponent(this.plugin.installedVersion);
+      './index.html?origin=' + encodeURIComponent(location.origin) + '&v=' + encodeURIComponent(this.plugin.installedVersion);
   }
 
   handleMessage = (e: MessageEvent) => {
@@ -273,7 +273,7 @@ export class CustomPluginsComponent implements OnInit, OnDestroy {
     for (const css of externalCss) {
       if (css.getAttribute('rel') === 'stylesheet') {
         const srcHref = css.getAttribute('href');
-        const href = document.baseURI + (srcHref.startsWith('/') ? srcHref.substr(1) : srcHref);
+        const href = document.baseURI + (srcHref.startsWith('./') ? srcHref.substr(1) : srcHref);
         event.source.postMessage({ action: 'link-element', href, rel: 'stylesheet' }, event.origin);
       }
     }
@@ -419,13 +419,13 @@ export class CustomPluginsComponent implements OnInit, OnDestroy {
    * Handle the event to get a list of cached accessories
    */
   async handleGetCachedAccessories(event) {
-    const cachedAccessories = await this.$api.get('/server/cached-accessories').toPromise();
+    const cachedAccessories = await this.$api.get('./server/cached-accessories').toPromise();
     return this.requestResponse(event, cachedAccessories.filter(x => x.plugin === this.plugin.name));
   }
 
   async savePluginConfig(exit = false) {
     this.saveInProgress = true;
-    return this.$api.post(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, this.pluginConfig)
+    return this.$api.post(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, this.pluginConfig)
       .toPromise()
       .then(() => {
         this.saveInProgress = false;
@@ -443,7 +443,7 @@ export class CustomPluginsComponent implements OnInit, OnDestroy {
 
   getChildBridges(): any[] {
     try {
-      this.$api.get('/status/homebridge/child-bridges').subscribe((data: any[]) => {
+      this.$api.get('./status/homebridge/child-bridges').subscribe((data: any[]) => {
         data.forEach((bridge) => {
           if (this.plugin.name === bridge.plugin) {
             this.childBridges.push(bridge);
@@ -458,14 +458,14 @@ export class CustomPluginsComponent implements OnInit, OnDestroy {
   }
 
   public onRestartHomebridgeClick() {
-    this.$router.navigate(['/restart']);
+    this.$router.navigate(['./restart']);
     this.activeModal.close();
   }
 
   public async onRestartChildBridgeClick() {
     try {
       for (const bridge of this.childBridges) {
-        await this.$api.put(`/server/restart/${bridge.username}`, {}).toPromise();
+        await this.$api.put(`./server/restart/${bridge.username}`, {}).toPromise();
       }
       this.$toastr.success(
         this.$translate.instant('plugins.manage.child_bridge_restart_success'),

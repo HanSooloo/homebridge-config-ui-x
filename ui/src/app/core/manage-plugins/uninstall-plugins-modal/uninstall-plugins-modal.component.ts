@@ -59,15 +59,15 @@ export class UninstallPluginsModalComponent implements OnInit {
   }
 
   async getAlias() {
-    return this.$api.get(`/plugins/alias/${encodeURIComponent(this.plugin.name)}`).toPromise();
+    return this.$api.get(`./plugins/alias/${encodeURIComponent(this.plugin.name)}`).toPromise();
   }
 
   async removePluginConfig() {
     // Remove the config for this plugin
-    await this.$api.post(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, []).toPromise();
+    await this.$api.post(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}`, []).toPromise();
 
     // If the plugin is in the disabled list, then remove it
-    await this.$api.put(`/config-editor/plugin/${encodeURIComponent(this.plugin.name)}/enable`, {}).toPromise();
+    await this.$api.put(`./config-editor/plugin/${encodeURIComponent(this.plugin.name)}/enable`, {}).toPromise();
 
     this.$toastr.success(
       this.translate.instant('plugins.settings.toast_plugin_config_saved'),

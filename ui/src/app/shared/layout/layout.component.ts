@@ -96,7 +96,7 @@ export class LayoutComponent implements OnInit {
       ref.componentInstance.faIconClass = 'fas fa-fw-power-off';
 
       ref.result.then(() => {
-        this.$router.navigate(['/restart']);
+        this.$router.navigate(['./restart']);
       }).catch(() => {
         // do nothing
       });

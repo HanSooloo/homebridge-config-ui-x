@@ -85,7 +85,7 @@ export class SetupWizardComponent implements OnInit, OnDestroy {
     const payload = this.createUserForm.getRawValue() as Record<string, string>;
     payload.name = payload.username;
 
-    this.$api.post('/setup-wizard/create-first-user', payload).subscribe(
+    this.$api.post('./setup-wizard/create-first-user', payload).subscribe(
       async () => {
         this.$settings.env.setupWizardComplete = true;
         await this.$auth.login({
@@ -119,14 +119,14 @@ export class SetupWizardComponent implements OnInit, OnDestroy {
   async uploadHomebridgeArchive() {
     try {
       // get and set a temporary access token
-      const authorization = await this.$api.get('/setup-wizard/get-setup-wizard-token').toPromise();
+      const authorization = await this.$api.get('./setup-wizard/get-setup-wizard-token').toPromise();
       window.localStorage.setItem(environment.jwt.tokenKey, authorization.access_token);
       this.$auth.token = authorization.access_token;
 
       // upload archive
       const formData: FormData = new FormData();
       formData.append('restoreArchive', this.selectedFile, this.selectedFile.name);
-      await this.$api.post('/backup/restore', formData).toPromise();
+      await this.$api.post('./backup/restore', formData).toPromise();
 
       // open restore modal
       this.openRestoreModal();
@@ -167,7 +167,7 @@ export class SetupWizardComponent implements OnInit, OnDestroy {
 
     const checkHomebridgeInterval = setInterval(async () => {
       try {
-        await this.$api.get('/auth/settings').toPromise();
+        await this.$api.get('./auth/settings').toPromise();
         clearInterval(checkHomebridgeInterval);
         location.reload();
       } catch (e) {

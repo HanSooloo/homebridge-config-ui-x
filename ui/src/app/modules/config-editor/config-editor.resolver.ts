@@ -13,11 +13,11 @@ export class ConfigEditorResolver implements Resolve<any> {
 
   async resolve() {
     try {
-      const json = await this.$api.get('/config-editor').toPromise();
+      const json = await this.$api.get('./config-editor').toPromise();
       return JSON.stringify(json, null, 4);
     } catch (err) {
       this.$toastr.error(err.message, 'Failed to Load Config');
-      this.$router.navigate(['/']);
+      this.$router.navigate(['./']);
     }
   }
 }

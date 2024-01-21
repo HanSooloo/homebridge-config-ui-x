@@ -15,25 +15,25 @@ export class StatusController {
   ) {}
 
   @ApiOperation({ summary: 'Return the current CPU load, load history and temperature (if available).' })
-  @Get('/cpu')
+  @Get('./cpu')
   getServerCpuInfo() {
     return this.statusService.getServerCpuInfo();
   }
 
   @ApiOperation({ summary: 'Return total memory, memory usage, and memory usage history in bytes.' })
-  @Get('/ram')
+  @Get('./ram')
   getServerMemoryInfo() {
     return this.statusService.getServerMemoryInfo();
   }
 
   @ApiOperation({ summary: 'Returns the current transmitted & received bytes per second.' })
-  @Get('/network')
+  @Get('./network')
   getServerNetworkInfo() {
     return this.statusService.getCurrentNetworkUsage();
   }
 
   @ApiOperation({ summary: 'Return the host and process (UI) uptime.' })
-  @Get('/uptime')
+  @Get('./uptime')
   getServerUptimeInfo() {
     return this.statusService.getServerUptimeInfo();
   }
@@ -42,7 +42,7 @@ export class StatusController {
     summary: 'Return the current Homebridge status.',
     description: 'Possible Homebridge statuses are `up`, `pending` or `down`.',
   })
-  @Get('/homebridge')
+  @Get('./homebridge')
   async checkHomebridgeStatus() {
     return {
       status: await this.statusService.checkHomebridgeStatus(),
@@ -53,31 +53,31 @@ export class StatusController {
     summary: 'Return an array of the active child bridges and their status.',
     description: 'This method is only available when running `hb-service`.',
   })
-  @Get('/homebridge/child-bridges')
+  @Get('./homebridge/child-bridges')
   async getChildBridges() {
     return this.childBridgesService.getChildBridges();
   }
 
   @ApiOperation({ summary: 'Return the current Homebridge version / package information.' })
-  @Get('/homebridge-version')
+  @Get('./homebridge-version')
   async getHomebridgeVersion() {
     return this.statusService.getHomebridgeVersion();
   }
 
   @ApiOperation({ summary: 'Return general information about the host environment.' })
-  @Get('/server-information')
+  @Get('./server-information')
   async getHomebridgeServerInfo() {
     return this.statusService.getHomebridgeServerInfo();
   }
 
   @ApiOperation({ summary: 'Return current Node.js version and update availability information.' })
-  @Get('/nodejs')
+  @Get('./nodejs')
   async getNodeJsVersionInfo() {
     return this.statusService.getNodeJsVersionInfo();
   }
 
   @ApiOperation({ summary: 'Returns throttled status for Raspberry Pi' })
-  @Get('/rpi/throttled')
+  @Get('./rpi/throttled')
   async getRaspberryPiThrottledStatus() {
     return this.statusService.getRaspberryPiThrottledStatus();
   }

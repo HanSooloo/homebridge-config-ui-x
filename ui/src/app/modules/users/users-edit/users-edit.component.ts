@@ -54,7 +54,7 @@ export class UsersEditComponent implements OnInit {
   }
 
   onSubmit({ value }) {
-    this.$api.patch(`/users/${this.user.id}`, value).subscribe(
+    this.$api.patch(`./users/${this.user.id}`, value).subscribe(
       () => {
         this.activeModal.close();
         this.toastr.success(this.translate.instant('users.toast_updated_user'), this.translate.instant('toast.title_success'));

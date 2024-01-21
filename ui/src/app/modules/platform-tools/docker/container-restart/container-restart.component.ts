@@ -35,7 +35,7 @@ export class ContainerRestartComponent implements OnInit, OnDestroy {
       this.$settings.getAppSettings().catch(/* do nothing */);
     });
 
-    this.$api.put('/platform-tools/docker/restart-container', {}).subscribe(
+    this.$api.put('./platform-tools/docker/restart-container', {}).subscribe(
       data => {
         this.resp = data;
         this.checkIfServerUp();
@@ -57,7 +57,7 @@ export class ContainerRestartComponent implements OnInit, OnDestroy {
             this.translate.instant('platform.docker.restart_container.toast_container_restarted'),
             this.translate.instant('toast.title_success'),
           );
-          this.$router.navigate(['/']);
+          this.$router.navigate(['./']);
         }
       });
     }, 10000);

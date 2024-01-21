@@ -67,7 +67,7 @@ export class BackupRestoreComponent implements OnInit, OnDestroy {
 
   async onDownloadBackupClick() {
     this.clicked = true;
-    this.$api.get('/backup/download', { observe: 'response', responseType: 'blob' }).subscribe(
+    this.$api.get('./backup/download', { observe: 'response', responseType: 'blob' }).subscribe(
       (res) => {
         const archiveName = res.headers.get('File-Name') || 'homebridge-backup.tar.gz';
         saveAs(res.body, archiveName);
@@ -98,7 +98,7 @@ export class BackupRestoreComponent implements OnInit, OnDestroy {
     this.clicked = true;
     const formData: FormData = new FormData();
     formData.append('restoreArchive', this.selectedFile, this.selectedFile.name);
-    this.$api.post('/backup/restore', formData).subscribe(
+    this.$api.post('./backup/restore', formData).subscribe(
       () => {
         this.restoreStarted = true;
         this.restoreInProgress = true;
@@ -138,7 +138,7 @@ export class BackupRestoreComponent implements OnInit, OnDestroy {
     this.clicked = true;
     const formData: FormData = new FormData();
     formData.append('restoreArchive', this.selectedFile, this.selectedFile.name);
-    this.$api.post('/backup/restore/hbfx', formData, {
+    this.$api.post('./backup/restore/hbfx', formData, {
       reportProgress: true,
       observe: 'events',
     }).subscribe(
@@ -191,10 +191,10 @@ export class BackupRestoreComponent implements OnInit, OnDestroy {
   }
 
   postBackupRestart() {
-    this.$api.put('/backup/restart', {}).subscribe(
+    this.$api.put('./backup/restart', {}).subscribe(
       () => {
         this.activeModal.close(true);
-        this.$route.navigate(['/']);
+        this.$route.navigate(['./']);
       },
       () => {},
     );

@@ -43,7 +43,7 @@ export class RestartComponent implements OnInit, OnDestroy {
       this.$settings.getAppSettings().catch(/* do nothing */);
     });
 
-    this.$api.put('/server/restart', {}).subscribe(
+    this.$api.put('./server/restart', {}).subscribe(
       data => {
         this.resp = data;
         this.checkIfServerUp();
@@ -66,7 +66,7 @@ export class RestartComponent implements OnInit, OnDestroy {
         this.uiOnline = true;
         if (data.status === 'up' || data.status === 'pending') {
           this.$toastr.success(this.translate.instant('restart.toast_server_restarted'), this.translate.instant('toast.title_success'));
-          this.$router.navigate(['/']);
+          this.$router.navigate(['./']);
         }
       });
     }, 7000);
@@ -80,7 +80,7 @@ export class RestartComponent implements OnInit, OnDestroy {
   }
 
   viewLogs() {
-    this.$router.navigate(['/logs']);
+    this.$router.navigate(['./logs']);
   }
 
   ngOnDestroy() {

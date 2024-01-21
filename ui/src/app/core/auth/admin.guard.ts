@@ -26,7 +26,7 @@ export class AdminGuard implements CanActivate {
       return true;
     } else {
       this.$toast.error('Only Administrators may access the requested page.');
-      this.$router.navigate(['/']);
+      this.$router.navigate(['./']);
       return false;
     }
   }

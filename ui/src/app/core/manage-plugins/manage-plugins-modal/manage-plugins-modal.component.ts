@@ -133,7 +133,7 @@ export class ManagePluginsModalComponent implements OnInit, OnDestroy {
       termRows: this.term.rows,
     }).subscribe(
       () => {
-        this.$router.navigate(['/plugins'], {
+        this.$router.navigate(['./plugins'], {
           queryParams: { installed: this.pluginName },
         });
         this.activeModal.close();
@@ -141,7 +141,7 @@ export class ManagePluginsModalComponent implements OnInit, OnDestroy {
       },
       (err) => {
         this.actionFailed = true;
-        this.$router.navigate(['/plugins']);
+        this.$router.navigate(['./plugins']);
         this.$toastr.error(err.message, this.$translate.instant('toast.title_error'));
       },
     );
@@ -155,7 +155,7 @@ export class ManagePluginsModalComponent implements OnInit, OnDestroy {
     }).subscribe(
       () => {
         this.activeModal.close();
-        this.$router.navigate(['/plugins']);
+        this.$router.navigate(['./plugins']);
         this.$modal.open(RestartHomebridgeComponent);
       },
       (err) => {
@@ -188,9 +188,9 @@ export class ManagePluginsModalComponent implements OnInit, OnDestroy {
         this.actionComplete = true;
         this.justUpdatedPlugin = true;
         if (this.pluginName === 'homebridge-config-ui-x') {
-          this.$router.navigate(['/']);
+          this.$router.navigate(['./']);
         } else {
-          this.$router.navigate(['/plugins']);
+          this.$router.navigate(['./plugins']);
         }
         this.$toastr.success(`${this.pastTenseVerb} ${this.pluginName}`, this.toastSuccess);
         this.getChangeLog();
@@ -204,7 +204,7 @@ export class ManagePluginsModalComponent implements OnInit, OnDestroy {
   }
 
   upgradeHomebridge() {
-    this.io.request('homebridge-update', {
+    this.io.request('.homebridge-update', {
       version: this.targetVersion,
       termCols: this.term.cols,
       termRows: this.term.rows,
@@ -221,7 +221,7 @@ export class ManagePluginsModalComponent implements OnInit, OnDestroy {
   }
 
   getChangeLog() {
-    this.$api.get(`/plugins/changelog/${encodeURIComponent(this.pluginName)}`).subscribe(
+    this.$api.get(`./plugins/changelog/${encodeURIComponent(this.pluginName)}`).subscribe(
       (data: { changelog: string }) => {
         this.changeLog = data.changelog;
       },
@@ -233,7 +233,7 @@ export class ManagePluginsModalComponent implements OnInit, OnDestroy {
 
   getChildBridges(): any[] {
     try {
-      this.$api.get('/status/homebridge/child-bridges').subscribe((data: any[]) => {
+      this.$api.get('./status/homebridge/child-bridges').subscribe((data: any[]) => {
         data.forEach((bridge) => {
           if (this.pluginName === bridge.plugin) {
             this.childBridges.push(bridge);
@@ -248,7 +248,7 @@ export class ManagePluginsModalComponent implements OnInit, OnDestroy {
   }
 
   getReleaseNotes() {
-    this.$api.get(`/plugins/release/${encodeURIComponent(this.pluginName)}`).subscribe(
+    this.$api.get(`./plugins/release/${encodeURIComponent(this.pluginName)}`).subscribe(
       (data) => {
         this.showReleaseNotes = true;
         this.release = data;
@@ -262,14 +262,14 @@ export class ManagePluginsModalComponent implements OnInit, OnDestroy {
   }
 
   public onRestartHomebridgeClick() {
-    this.$router.navigate(['/restart']);
+    this.$router.navigate(['./restart']);
     this.activeModal.close();
   }
 
   public async onRestartChildBridgeClick() {
     try {
       for (const bridge of this.childBridges) {
-        await this.$api.put(`/server/restart/${bridge.username}`, {}).toPromise();
+        await this.$api.put(`./server/restart/${bridge.username}`, {}).toPromise();
       }
       this.$toastr.success(
         this.$translate.instant('plugins.manage.child_bridge_restart_success'),

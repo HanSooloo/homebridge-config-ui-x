@@ -115,7 +115,7 @@ export class PluginCardComponent implements OnInit {
 
     ref.result.then(async () => {
       try {
-        await this.$api.put(`/config-editor/plugin/${encodeURIComponent(plugin.name)}/disable`, {}).toPromise();
+        await this.$api.put(`./config-editor/plugin/${encodeURIComponent(plugin.name)}/disable`, {}).toPromise();
         // Mark as disabled
         plugin.disabled = true;
 
@@ -142,7 +142,7 @@ export class PluginCardComponent implements OnInit {
 
     ref.result.then(async () => {
       try {
-        await this.$api.put(`/config-editor/plugin/${encodeURIComponent(plugin.name)}/enable`, {}).toPromise();
+        await this.$api.put(`./config-editor/plugin/${encodeURIComponent(plugin.name)}/enable`, {}).toPromise();
         // mark as enabled
         plugin.disabled = false;
         // start all child bridges
