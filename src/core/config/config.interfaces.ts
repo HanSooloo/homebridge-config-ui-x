@@ -92,6 +92,7 @@ export interface HomebridgeUiConfig {
   port: number
   host?: '::' | '0.0.0.0' | string
   proxyHost?: string
+  basePath?: string
   auth: 'form' | 'none'
   theme: string
   lightingMode: 'auto' | 'light' | 'dark'

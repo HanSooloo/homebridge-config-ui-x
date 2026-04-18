@@ -92,6 +92,8 @@ export class ConfigService {
 
   public instanceId: string
 
+  public basePath: string
+
   constructor() {
     const homebridgeConfig = readJSONSync(this.configPath)
     this.parseConfig(homebridgeConfig)
@@ -141,9 +143,37 @@ export class ConfigService {
 
     this.secrets = this.getSecrets()
     this.instanceId = this.getInstanceId()
+    this.basePath = this.normalizeBasePath(this.ui.basePath)
 
     this.freezeUiSettings()
     this.getCustomWallpaperHash()
+  }
+
+  /**
+   * Normalizes the basePath to ensure it starts with / and doesn't end with /
+   */
+  private normalizeBasePath(basePath?: string): string {
+    if (!basePath) {
+      return ''
+    }
+
+    // Remove leading slashes
+    let normalized = basePath.trim()
+    while (normalized.startsWith('/')) {
+      normalized = normalized.slice(1)
+    }
+    // Remove trailing slashes
+    while (normalized.endsWith('/')) {
+      normalized = normalized.slice(0, -1)
+    }
+
+    // If empty after normalization, return empty string
+    if (!normalized) {
+      return ''
+    }
+
+    // Add leading slash
+    return `/${normalized}`
   }
 
   /**

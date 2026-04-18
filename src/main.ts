@@ -18,6 +18,7 @@ import { ConfigService } from './core/config/config.service.js'
 import { getStartupConfig } from './core/config/config.startup.js'
 import { devServerCorsConfig } from './core/cors.config.js'
 import { Logger } from './core/logger/logger.service.js'
+import { SocketIOAdapter } from './core/socket-io.adapter.js'
 import { SpaFilter } from './core/spa/spa.filter.js'
 
 import './env-setup.js'
@@ -26,6 +27,9 @@ import './self-check.js'
 import './global-defaults.js'
 
 export { HomebridgeIpcService } from './core/homebridge-ipc/homebridge-ipc.service.js'
+
+// Regex for replacing base href in HTML
+const BASE_HREF_REGEX = /<base href="[^"]*"/
 
 async function bootstrap(): Promise<NestFastifyApplication> {
   const startupConfig = await getStartupConfig()
@@ -90,25 +94,40 @@ async function bootstrap(): Promise<NestFastifyApplication> {
   const configService: ConfigService = app.get(ConfigService)
   const logger: Logger = app.get(Logger)
 
+  // Determine the base path for the application
+  const basePath = configService.basePath
+  const baseHref = basePath ? `${basePath}/` : '/'
+
+  // Configure WebSocket adapter with basePath support
+  app.useWebSocketAdapter(new SocketIOAdapter(app, configService))
+
   // Serve index.html without a cache
-  app.getHttpAdapter().get('/', async (req: FastifyRequest, res: FastifyReply) => {
+  app.getHttpAdapter().get(basePath || '/', async (req: FastifyRequest, res: FastifyReply) => {
     res.type('text/html')
     res.header('Cache-Control', 'no-cache, no-store, must-revalidate')
     res.header('Pragma', 'no-cache')
     res.header('Expires', '0')
-    res.send(await readFile(resolve(process.env.UIX_BASE_PATH, 'public/index.html')))
+    // Read index.html and inject the base href dynamically
+    const indexHtml = await readFile(resolve(process.env.UIX_BASE_PATH, 'public/index.html'), 'utf-8')
+    const modifiedHtml = indexHtml.replace(BASE_HREF_REGEX, `<base href="${baseHref}"`)
+    res.send(modifiedHtml)
   })
 
-  // (7) Serve static assets with a long cache timeout
+  // (7) Serve static assets with a long cache timeout (excluding index.html)
   app.useStaticAssets({
     root: resolve(process.env.UIX_BASE_PATH, 'public'),
+    prefix: basePath || undefined,
     setHeaders(res) {
       res.setHeader('Cache-Control', 'public,max-age=31536000,immutable')
     },
+    decorateReply: false,
+    serve: true,
+    wildcard: false,
+    index: false, // Don't serve index.html automatically
   })
 
   // Set prefix
-  app.setGlobalPrefix('/api')
+  app.setGlobalPrefix(basePath ? `${basePath}/api` : '/api')
 
   // (9) Set up cors
   app.enableCors({
@@ -131,17 +150,17 @@ async function bootstrap(): Promise<NestFastifyApplication> {
       type: 'oauth2',
       flows: {
         password: {
-          tokenUrl: '/api/auth/login',
+          tokenUrl: basePath ? `${basePath}/api/auth/login` : '/api/auth/login',
           scopes: null,
         },
       },
     })
     .build()
   const document = SwaggerModule.createDocument(app, options)
-  SwaggerModule.setup('swagger', app, document)
+  SwaggerModule.setup(basePath ? `${basePath}/swagger` : 'swagger', app, document)
 
   // (12) Use the spa filter to serve index.html for any non-api routes
-  app.useGlobalFilters(new SpaFilter())
+  app.useGlobalFilters(new SpaFilter(configService))
 
   // (13) Start listening - woohoo!
   logger.warn(`Homebridge UI v${configService.package.version} is listening on ${startupConfig.host} port ${configService.ui.port}.`)
@@ -161,7 +180,7 @@ async function bootstrap(): Promise<NestFastifyApplication> {
         port: configService.ui.port,
         host: startupConfig.host === '0.0.0.0' || startupConfig.host === '::' ? undefined : startupConfig.host,
         txt: {
-          path: '/',
+          path: basePath || '/',
           version: configService.package.version,
           https: startupConfig.httpsOptions ? 'true' : 'false',
         },
